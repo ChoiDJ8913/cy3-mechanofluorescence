@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+title: "cy3-mechanofluorescence: analysis code for single-molecule mechanosensitive Cy3 fluorescence"
+message: "If you use this software, please cite both the software and the associated paper."
+type: software
+version: 1.0.0
+license: MIT
+authors:
+  - family-names: Choi
+    given-names: Dongju
+    affiliation: "Korea Advanced Institute of Science and Technology"
+  - family-names: Cho
+    given-names: Hyeokjin
+    affiliation: "Korea Advanced Institute of Science and Technology"
+  - family-names: Lee
+    given-names: Kyung Suk
+    affiliation: "Kongju National University"
+  - family-names: Lee
+    given-names: Gwangrog
+    affiliation: "Korea Advanced Institute of Science and Technology"

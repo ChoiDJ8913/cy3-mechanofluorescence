@@ -1,6 +1,6 @@
 # cy3-mechanofluorescence
 
-MATLAB analysis code for **"Cy3 is a Single-Molecule Mechanosensitive Fluorophore
+MATLAB analysis code for **"Cy3 as a Single-Molecule Mechanosensitive Fluorophore
 with Reversible Emission Modulation by Piconewton Forces"** (Choi, Cho, Lee & Lee, 2026).
 
 Data: https://doi.org/10.5281/zenodo.21885650

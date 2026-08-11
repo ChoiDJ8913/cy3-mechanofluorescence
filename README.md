@@ -100,4 +100,4 @@ of the data deposit.
 ## Citation
 
 > Choi, D., Cho, H., Lee, K. S., & Lee, G. (2026). cy3-mechanofluorescence (v1.0.0).
-> Zenodo. https://doi.org/10.5281/zenodo.YYYYYYY
+> Zenodo. https://doi.org/10.5281/zenodo.21885650

@@ -2,7 +2,9 @@ cff-version: 1.2.0
 title: "cy3-mechanofluorescence: analysis code for single-molecule mechanosensitive Cy3 fluorescence"
 message: "If you use this software, please cite both the software and the associated paper."
 type: software
-version: 1.0.0
+version: 1.0.1
+doi: 10.5281/zenodo.21886261
+repository-code: "https://github.com/ChoiDJ8913/cy3-mechanofluorescence"
 license: MIT
 authors:
   - family-names: Choi

@@ -1,0 +1,18 @@
+# Data lives in the Zenodo deposit, not in this repository
+data/
+output/
+*.tif
+*.tiff
+*.sif
+*.mat
+!5ns4_xyz.xlsx
+
+# MATLAB
+*.asv
+*.m~
+slprj/
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini

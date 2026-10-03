@@ -18,6 +18,7 @@ function out = SegMeansBatchAggregator(rootDir, varargin)
 %   mean_sgnl, sd_sgnl, mean_bgnd, sd_bgnd, mean_raw, sd_raw
 
 % ------------------- options -------------------
+if nargin < 1, rootDir = ""; end
 p = inputParser; p.FunctionName = mfilename;
 addOptional(p, 'rootDir', "", @(s)isstring(s)||ischar(s));
 addParameter(p, 'NormMode',   'fl',    @(s)isstring(s)||ischar(s));

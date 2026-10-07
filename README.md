@@ -1,4 +1,3 @@
-[README.md](https://github.com/user-attachments/files/33082211/README.md)
 # cy3-mechanofluorescence
 
 MATLAB analysis code for **"Piconewton Forces Reversibly Modulate Emission from a Single
@@ -59,7 +58,7 @@ batchHybridBgSubAnalysis                   drift estimate and hybrid background 
         visualize_bg_subtraction)
        └─ roi_viewer_gui                   low/high spectral profiles → *_signalData.mat
             (apply_background_subtraction)
-            └─ merge_and_analyze_spectra_v3   per-molecule baseline correction and peak
+            └─ merge_and_analyze_spectra_v4   per-molecule baseline correction and peak
                  (pixel_lambda_calib_gui)     normalization, outlier filter, averaging,
                                               pixel-to-wavelength calibration
 ```
@@ -85,7 +84,7 @@ runs the same scan with heat maps and validation plots.
 | Figure 1B–D, Table 1, Figure 1—figure supplements 2 and 3 | `MTFindPeaks`, `MTView`, `cy3_MTFindPeaks_MTView_batch`, `FluorSegmenterLite_v2`, `SegMeansBatchAggregator`, `SegMeansMinimal`, `ana_MT_avr` |
 | Figure 1—figure supplement 1 | `MTFindPeaks_v2`, `MTView_v2`, `MTPanelA`, `MTLabelEditor`, `mt_label`, `mt_labelpos` |
 | Figure 2, Figure 2—figure supplement 1 | `MTFluorQC_GUI`, `MT_export_long_table_plateau_LOW_HIGH`, `export_fig2_dimming_split_from_longtable`, `export_origin_low_high_from_trace`, `export_origin_scatter_roi_means_from_trace` |
-| Figure 2—figure supplement 2 | `batchHybridBgSubAnalysis`, `select_ROIs_batch_with_drift_gui`, `detect_stable_force_frames`, `estimate_background_scattered_nansafe`, `visualize_background_correction_whole`, `visualize_bg_subtraction`, `roi_viewer_gui`, `apply_background_subtraction`, `merge_and_analyze_spectra_v3`, `pixel_lambda_calib_gui` |
+| Figure 2—figure supplement 2 | `batchHybridBgSubAnalysis`, `select_ROIs_batch_with_drift_gui`, `detect_stable_force_frames`, `estimate_background_scattered_nansafe`, `visualize_background_correction_whole`, `visualize_bg_subtraction`, `roi_viewer_gui`, `apply_background_subtraction`, `merge_and_analyze_spectra_v4`, `pixel_lambda_calib_gui` |
 | Figure 3B | `cy3_panel_B_fig3` |
 | Figure 3C | **not produced by code in this repository** — see below |
 | Figure 3D | `cy3_panel_D_fig3_v8`, `run_torsion_dx_pipeline` |
@@ -113,11 +112,26 @@ the labels coincide with the position-based groups (bead-tethered vs no-bead) us
 article. Three ROIs were excluded from Figure 2 by hand; they are listed in
 `Figure2_excluded_rois.csv` in the data deposit.
 
-## Spectra outlier filter
+## Emission spectra (Figure 2—figure supplement 2)
 
-`merge_and_analyze_spectra_v3` excludes molecules whose low-force peak (3-point moving mean)
-exceeds the median + 6 × MAD of all molecules in the folder (`QC_MADmult = 6`). The N reported
-in the article (18 bead-on, 31 bead-off) is after this filter.
+`merge_and_analyze_spectra_v4` is `merge_and_analyze_spectra_v3` with publication labels added
+(`PaperLabels = true` by default: clean legend, no titles or RMSE notes on the paper-style
+figures); the analysis is unchanged. It excludes molecules whose low-force peak (3-point moving
+mean) exceeds the median + 6 × MAD of all molecules in the folder (`QC_MADmult = 6`).
+
+The figure uses only the records acquired with the 23.0 mm (24.9 pN) high-force magnet position;
+run the function separately on the bead-on and bead-off folders of that subset, with the bulk
+iCy3 spectrum `Cy3_exp2.csv` (Tecan Spark; data deposit) as calibration reference:
+
+```matlab
+merge_and_analyze_spectra_v4(DataDir="<bead-on folder>", CalibrationRefShortName="Cy3_exp2.csv")
+merge_and_analyze_spectra_v4(DataDir="<bead-off folder>", CalibrationRefShortName="Cy3_exp2.csv", ...
+    LowForceLabel="Low-force magnet position", HighForceLabel="High-force magnet position")
+```
+
+The N reported in the article (11 bead-on, 16 bead-off) is after the outlier filter. Which molecules
+belong to the subset is listed in `spectra_molecules.csv` (`used_in_Figure2_supp2`) in the data
+deposit. `merge_and_analyze_spectra_v3` is kept for reference.
 
 ## Known issues (kept so that the code reproduces the deposited numbers)
 
@@ -153,6 +167,13 @@ extension-based calibration (`make_psd_T2F_F2T`), and the superseded Figure 3D s
 These scripts were run interactively with folder pickers; a few default to folders on the
 original acquisition machine. Point them at the corresponding folder of the data deposit.
 
+## Changes in v1.0.2
+
+- Added `merge_and_analyze_spectra_v4.m`, which draws Figure 2—figure supplement 2 (publication
+  labels; analysis identical to v3).
+- README: Figure 2—figure supplement 2 now uses the 24.9 pN subset and the bulk iCy3 calibration
+  spectrum (`Cy3_exp2.csv`), both in the data deposit.
+
 ## Changes in v1.0.1
 
 - Added `FluorSegmenterLite_v2.m`, which writes the deposited `*_segmeans_all.csv` files.
@@ -167,5 +188,5 @@ original acquisition machine. Point them at the corresponding folder of the data
 
 ## Citation
 
-> Choi, D., Cho, H., Lee, K. S., & Lee, G. (2026). cy3-mechanofluorescence (v1.0.1).
+> Choi, D., Cho, H., Lee, K. S., & Lee, G. (2026). cy3-mechanofluorescence (v1.0.2).
 > Zenodo. https://doi.org/10.5281/zenodo.21886261

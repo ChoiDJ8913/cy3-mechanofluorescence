@@ -1,13 +1,9 @@
 %% cy3_panel_D_fig3_v8.m
 % Figure 3D: projected displacement of the Cy3 attachment-point distance
 % versus bridge-bond torsion angle (phi1-phi4), PDB 5NS4.
-% Changes from cy3_panel_C_fig3_v7.m (curves, colours and axes unchanged):
-%   - Shaded band = +/- SE of the Bell-model fit (Figure 3C), computed below
-%     from the Origin linear-fit output. v7 hard-coded 0.51 A, which does not
-%     correspond to any fit output (the fit SE is 0.0515 A).
-%   - Label moved to the centre, above the band (the narrow band no longer
-%     leaves room at the lower left without overlapping the phi1/phi4 curves).
-%   - Panel letter C -> D; output file names -> fig3_panelD_v11.*
+% Dotted horizontal line = apparent Delta_xeff from the Bell-model fit
+% (Figure 3C); the fit SE is printed to the console.
+% Output: fig3_panelD_v12.*
 % phi1: blue  solid   + circle    (o)
 % phi2: orange dashed + square    (s)
 % phi3: green  dashed + triangle  (^)
@@ -21,12 +17,12 @@ phiScan       = (-180:1:180)';
 
 % Bell-model fit of ln[I(F)/I(F0)] vs F (Figure 3C; OriginPro 2019 Linear Fit,
 % N-weighted pooled Up/Down mean, 5.1-27.3 pN, weights 1/sigma^2):
-fitSlope    = -0.02655;          % pN^-1
-fitSlopeSE  =  0.00125;          % pN^-1 (scaled by sqrt of reduced chi-sqr)
+fitSlope    = -0.02661;          % pN^-1
+fitSlopeSE  =  0.00124;          % pN^-1 (scaled by sqrt of reduced chi-sqr)
 T_K         = 298.15;            % 25 degC
 kBT_pNA     = 1.380649e-23*T_K*1e22;         % pN*Angstrom (= 41.16)
-Delta_xeff    = -fitSlope*kBT_pNA;           % 1.093 A
-Delta_xeff_se =  fitSlopeSE*kBT_pNA;         % 0.0515 A
+Delta_xeff    = -fitSlope*kBT_pNA;           % 1.095 A
+Delta_xeff_se =  fitSlopeSE*kBT_pNA;         % 0.0510 A
 fprintf('Delta_xeff = %.3f +/- %.3f A (slope +/- SE, kBT = %.2f pN*A)\n', ...
         Delta_xeff, Delta_xeff_se, kBT_pNA);
 
@@ -82,12 +78,6 @@ ax.Units='centimeters';
 ax.Position=[1.9 1.3 8.8 5.0];
 hold(ax,'on'); box(ax,'on');
 
-% Shaded band: +/- SE of the fitted Delta_xeff
-fill(ax,[-180 180 180 -180], ...
-    [Delta_xeff-Delta_xeff_se Delta_xeff-Delta_xeff_se ...
-     Delta_xeff+Delta_xeff_se Delta_xeff+Delta_xeff_se], ...
-    [0.80 0.80 0.80],'EdgeColor','none','FaceAlpha',0.60);
-
 % Dotted Δxeff line (black)
 plot(ax,[-180 180],[Delta_xeff Delta_xeff],':', ...
     'Color',[0.10 0.10 0.10],'LineWidth',0.8,'HandleVisibility','off');
@@ -108,9 +98,9 @@ for k=1:4
         'DisplayName',['φ' num2str(k)]);
 end
 
-% Annotation: BLACK, no +/-, centred just above the band
-text(ax,0,Delta_xeff+Delta_xeff_se+0.08, ...
-    'Δx_e_f_f = 1.09 Å', ...
+% Annotation: BLACK, centred just above the reference line
+text(ax,0,Delta_xeff+0.08, ...
+    'Δx_e_f_f = 1.10 Å', ...
     'FontName','Arial','FontSize',8,'Color',[0.10 0.10 0.10], ...
     'HorizontalAlignment','center','VerticalAlignment','bottom', ...
     'Interpreter','tex');
@@ -135,9 +125,9 @@ annotation(fig,'textbox',[0.01 0.91 0.07 0.08],'String','D', ...
     'EdgeColor','none','FitBoxToText','on');
 
 hold(ax,'off');
-exportgraphics(fig,'fig3_panelD_v11.pdf','ContentType','vector');
-exportgraphics(fig,'fig3_panelD_v11.png','Resolution',600);
-fprintf('Saved: fig3_panelD_v11.pdf  +  fig3_panelD_v11.png (600 dpi)\n');
+exportgraphics(fig,'fig3_panelD_v12.pdf','ContentType','vector');
+exportgraphics(fig,'fig3_panelD_v12.png','Resolution',600);
+fprintf('Saved: fig3_panelD_v12.pdf  +  fig3_panelD_v12.png (600 dpi)\n');
 
 function xyzOut=rotate_subset(xyzIn,idxA,idxB,moveIdx,thetaDeg)
     p0=xyzIn(idxA,:); p1=xyzIn(idxB,:);

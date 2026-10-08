@@ -94,14 +94,14 @@ runs the same scan with heat maps and validation plots.
 
 ## How Δx_eff was obtained
 
-The published value **Δx_eff = 1.09 ± 0.05 Å (slope ± SE; R² = 0.978)** comes from a
+The published value **Δx_eff = 1.10 ± 0.05 Å (slope ± SE; R² = 0.979)** comes from a
 weighted linear regression of ln[I(F)/I(F0)] against force over 5.1–27.3 pN, using the
 N-weighted pooled mean of the Up and Down series with weights 1/σ² (σ = pooled SD / mean),
-performed in OriginPro 2019 (Linear Fit): slope = −0.02655 ± 0.00125 pN⁻¹, converted with
+performed in OriginPro 2019 (Linear Fit): slope = −0.02661 ± 0.00124 pN⁻¹, converted with
 k_BT = 41.16 pN·Å (25 °C). The fit input is `Table1_Figure1D_Figure3C_source.csv` in the data
-deposit, and a weighted least-squares fit on those rows reproduces the slope, SE and R² above.
-`cy3_panel_D_fig3_v8.m` enters the Origin slope and its SE as constants and draws Δx_eff and its
-SE as the reference line and shaded band in Figure 3D.
+deposit (version 2), and a weighted least-squares fit on those rows reproduces the slope, SE and R² above.
+`cy3_panel_D_fig3_v8.m` enters the Origin slope and its SE as constants, prints Δx_eff ± SE, and
+draws Δx_eff as the dotted reference line in Figure 3D.
 
 ## Figure 2 groups
 
@@ -158,14 +158,19 @@ published figure or value**: earlier segmentation and collection tools (`FluorSe
 `MeansCollectorLite`), alternative force–intensity fits (`fit_FDeltaX_bell`, `fit_single_exp_IF`,
 `fit_cy3_intensity_vs_force`), alternative structural scans (`Cy3`, `icy3_anchor_check`,
 `cy3_Dx_absolute`, `cy3_torsion_align_scan_v2`, `standardize_atom`), earlier Figure 2 comparisons
-with fixed frame windows (`onefile_lowhigh_compare`, `peak_matched_low_high_scatter`), an
-extension-based calibration (`make_psd_T2F_F2T`), and the superseded Figure 3D script
-(`cy3_panel_C_fig3_v7`, which hard-coded an incorrect ±0.51 Å band).
+with fixed frame windows (`onefile_lowhigh_compare`, `peak_matched_low_high_scatter`), and an
+extension-based calibration (`make_psd_T2F_F2T`).
 
 ## Note on paths
 
 These scripts were run interactively with folder pickers; a few default to folders on the
 original acquisition machine. Point them at the corresponding folder of the data deposit.
+
+## Changes in v1.0.3
+
+- `cy3_panel_D_fig3_v8.m`: Figure 3D draws Δx_eff as a dotted reference line only (no band);
+  the fit constants follow the version 2 data deposit (Δx_eff = 1.10 ± 0.05 Å).
+- Removed an unused exploratory Figure 3D script from `exploratory/`.
 
 ## Changes in v1.0.2
 
@@ -178,15 +183,14 @@ original acquisition machine. Point them at the corresponding folder of the data
 
 - Added `FluorSegmenterLite_v2.m`, which writes the deposited `*_segmeans_all.csv` files.
 - Added the emission-spectrum pipeline (`batchHybridBgSubAnalysis` … `pixel_lambda_calib_gui`).
-- `cy3_panel_D_fig3_v8.m` replaces `cy3_panel_C_fig3_v7.m` for Figure 3D (band = ± SE,
-  0.05 Å) and prints the ±90° values.
+- `cy3_panel_D_fig3_v8.m` draws Figure 3D and prints the ±90° values.
 - `detect_stable_force_frames`: calibration file is now an option (`'CalFile'`, default
   `CAL_M280_9.8mm_cube_Magnet_20250908.mat`, the calibration used for all published forces)
   instead of an absolute path to an older calibration. `SegMeansBatchAggregator` can be called without arguments.
 - Scripts not used for the article moved to `exploratory/`.
-- README and citation updated to the eLife numbering and the corrected Δx_eff uncertainty.
+- README and citation updated to the eLife numbering.
 
 ## Citation
 
-> Choi, D., Cho, H., Lee, K. S., & Lee, G. (2026). cy3-mechanofluorescence (v1.0.2).
+> Choi, D., Cho, H., Lee, K. S., & Lee, G. (2026). cy3-mechanofluorescence (v1.0.3).
 > Zenodo. https://doi.org/10.5281/zenodo.21886261

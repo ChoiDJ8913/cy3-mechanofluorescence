@@ -4,7 +4,7 @@
 % Dotted horizontal line = structural (model) Delta_xeff = 1.51 A
 % (rotation toward the 90-deg twisted configuration). The Bell-model fit
 % value (Figure 3C) is printed to the console for comparison only.
-% v9: open (unfilled) markers; markers staggered between curves so they
+% v8: open (unfilled) markers; markers staggered between curves so they
 %     do not stack; reference line moved from the fit value to 1.51 A.
 % Output: fig3_panelD_v13.*
 % phi1: blue  solid   + circle    (o)

@@ -12,7 +12,7 @@
 % phi2: orange dashed + square    (s)
 % phi3: green  dashed + triangle  (^)
 % phi4: purple dotted + diamond   (d)
-% x axis: -160 to 160
+% x axis: -180 to 180
 
 clear; clc;
 

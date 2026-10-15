@@ -1,9 +1,12 @@
 %% cy3_panel_D_fig3_v8.m
 % Figure 3D: projected displacement of the Cy3 attachment-point distance
 % versus bridge-bond torsion angle (phi1-phi4), PDB 5NS4.
-% Dotted horizontal line = apparent Delta_xeff from the Bell-model fit
-% (Figure 3C); the fit SE is printed to the console.
-% Output: fig3_panelD_v12.*
+% Dotted horizontal line = structural (model) Delta_xeff = 1.51 A
+% (rotation toward the 90-deg twisted configuration). The Bell-model fit
+% value (Figure 3C) is printed to the console for comparison only.
+% v9: open (unfilled) markers; markers staggered between curves so they
+%     do not stack; reference line moved from the fit value to 1.51 A.
+% Output: fig3_panelD_v13.*
 % phi1: blue  solid   + circle    (o)
 % phi2: orange dashed + square    (s)
 % phi3: green  dashed + triangle  (^)
@@ -56,6 +59,11 @@ for k=1:4
         dxCC(phiScan==90,k), dxCC(phiScan==-90,k));
 end
 
+% Reference line: structural (model) estimate quoted in the text
+Delta_model = 1.51;              % A
+fprintf('Reference line: Delta_xeff(model) = %.2f A (fit: %.2f A)\n', ...
+        Delta_model, Delta_xeff);
+
 %% style - as in the original
 colors = [0.000 0.447 0.741;   % phi1 blue
           0.855 0.412 0.020;   % phi2 orange
@@ -66,7 +74,14 @@ lineStyles = {'-', '--', '--', ':'};
 markers    = {'o', 's',  '^',  'd'};
 mSizes     = [ 5,   5,    5,    6 ];
 step=20;
-mkIdx=unique([1,(1:step:nPhi),nPhi]);
+% Stagger marker positions between curves (0, 5, 10, 15 deg offsets) so
+% markers of overlapping curves do not sit on top of each other.
+% Set mkOffset = [0 0 0 0] to place all markers at the same angles.
+mkOffset = [0 5 10 15];
+mkIdx = cell(1,4);
+for k=1:4
+    mkIdx{k} = (1+mkOffset(k)):step:nPhi;
+end
 
 %% Figure
 fig=figure('Color','w');
@@ -78,8 +93,8 @@ ax.Units='centimeters';
 ax.Position=[1.9 1.3 8.8 5.0];
 hold(ax,'on'); box(ax,'on');
 
-% Dotted Δxeff line (black)
-plot(ax,[-180 180],[Delta_xeff Delta_xeff],':', ...
+% Dotted Δxeff line (black) at the structural (model) value
+plot(ax,[-180 180],[Delta_model Delta_model],':', ...
     'Color',[0.10 0.10 0.10],'LineWidth',0.8,'HandleVisibility','off');
 
 % Zero line
@@ -92,15 +107,15 @@ for k=1:4
     hLines(k)=plot(ax,phiScan,dxCC(:,k), ...
         lineStyles{k}, ...
         'Color',colors(k,:),'LineWidth',1.3, ...
-        'Marker',markers{k},'MarkerIndices',mkIdx, ...
+        'Marker',markers{k},'MarkerIndices',mkIdx{k}, ...
         'MarkerSize',mSizes(k), ...
-        'MarkerFaceColor','w','MarkerEdgeColor',colors(k,:), ...
+        'MarkerFaceColor','none','MarkerEdgeColor',colors(k,:), ...
         'DisplayName',['φ' num2str(k)]);
 end
 
 % Annotation: BLACK, centred just above the reference line
-text(ax,0,Delta_xeff+0.08, ...
-    'Δx_e_f_f = 1.10 Å', ...
+text(ax,0,Delta_model+0.08, ...
+    sprintf('Δx_e_f_f = %.2f Å',Delta_model), ...
     'FontName','Arial','FontSize',8,'Color',[0.10 0.10 0.10], ...
     'HorizontalAlignment','center','VerticalAlignment','bottom', ...
     'Interpreter','tex');
@@ -125,9 +140,9 @@ annotation(fig,'textbox',[0.01 0.91 0.07 0.08],'String','D', ...
     'EdgeColor','none','FitBoxToText','on');
 
 hold(ax,'off');
-exportgraphics(fig,'fig3_panelD_v12.pdf','ContentType','vector');
-exportgraphics(fig,'fig3_panelD_v12.png','Resolution',600);
-fprintf('Saved: fig3_panelD_v12.pdf  +  fig3_panelD_v12.png (600 dpi)\n');
+exportgraphics(fig,'fig3_panelD_v13.pdf','ContentType','vector');
+exportgraphics(fig,'fig3_panelD_v13.png','Resolution',600);
+fprintf('Saved: fig3_panelD_v13.pdf  +  fig3_panelD_v13.png (600 dpi)\n');
 
 function xyzOut=rotate_subset(xyzIn,idxA,idxB,moveIdx,thetaDeg)
     p0=xyzIn(idxA,:); p1=xyzIn(idxB,:);

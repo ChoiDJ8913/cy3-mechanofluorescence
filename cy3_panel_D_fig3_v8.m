@@ -5,7 +5,8 @@
 % (rotation toward the 90-deg twisted configuration). The Bell-model fit
 % value (Figure 3C) is printed to the console for comparison only.
 % v8: open (unfilled) markers; markers staggered between curves so they
-%     do not stack; reference line moved from the fit value to 1.51 A.
+%     do not stack; reference line moved from the fit value to 1.51 A;
+%     vertical dotted lines at -90 and +90 deg.
 % Output: fig3_panelD_v13.*
 % phi1: blue  solid   + circle    (o)
 % phi2: orange dashed + square    (s)
@@ -59,10 +60,10 @@ for k=1:4
         dxCC(phiScan==90,k), dxCC(phiScan==-90,k));
 end
 
-% Reference line: structural (model) estimate quoted in the text
-Delta_model = 1.51;              % A
-fprintf('Reference line: Delta_xeff(model) = %.2f A (fit: %.2f A)\n', ...
-        Delta_model, Delta_xeff);
+% % Reference line: structural (model) estimate quoted in the text
+% Delta_model = 1.51;              % A
+% fprintf('Reference line: Delta_xeff(model) = %.2f A (fit: %.2f A)\n', ...
+%         Delta_model, Delta_xeff);
 
 %% style - as in the original
 colors = [0.000 0.447 0.741;   % phi1 blue
@@ -93,9 +94,15 @@ ax.Units='centimeters';
 ax.Position=[1.9 1.3 8.8 5.0];
 hold(ax,'on'); box(ax,'on');
 
-% Dotted Δxeff line (black) at the structural (model) value
-plot(ax,[-180 180],[Delta_model Delta_model],':', ...
-    'Color',[0.10 0.10 0.10],'LineWidth',0.8,'HandleVisibility','off');
+% % Dotted Δxeff line (black) at the structural (model) value
+% plot(ax,[-180 180],[Delta_model Delta_model],':', ...
+%     'Color',[0.10 0.10 0.10],'LineWidth',0.8,'HandleVisibility','off');
+
+% Vertical dotted lines at -90 and +90 deg (twisted configuration)
+for xv = [-90 90]
+    plot(ax,[xv xv],[-0.5 3.0],':', ...
+        'Color',[0.10 0.10 0.10],'LineWidth',0.8,'HandleVisibility','off');
+end
 
 % Zero line
 plot(ax,[-180 180],[0 0],'-', ...
@@ -113,18 +120,18 @@ for k=1:4
         'DisplayName',['φ' num2str(k)]);
 end
 
-% Annotation: BLACK, centred just above the reference line
-text(ax,0,Delta_model+0.08, ...
-    sprintf('Δx_e_f_f = %.2f Å',Delta_model), ...
-    'FontName','Arial','FontSize',8,'Color',[0.10 0.10 0.10], ...
-    'HorizontalAlignment','center','VerticalAlignment','bottom', ...
-    'Interpreter','tex');
+% % Annotation: BLACK, centred just above the reference line
+% text(ax,0,Delta_model+0.08, ...
+%     sprintf('Δx_e_f_f = %.2f Å',Delta_model), ...
+%     'FontName','Arial','FontSize',8,'Color',[0.10 0.10 0.10], ...
+%     'HorizontalAlignment','center','VerticalAlignment','bottom', ...
+%     'Interpreter','tex');
 
 %% Formatting
 xlim(ax,[-160 160]);
 ylim(ax,[-0.5 3.0]);
-xticks(ax,-150:50:150);
-xticklabels(ax,{'-150','-100','-50','0','50','100','150'});
+xticks(ax,-180:45:180);
+xticklabels(ax,{'-180','-135','-90','-45','0','45','90','135','180'});
 yticks(ax,-0.5:0.5:3.0);
 ax.FontName='Arial'; ax.FontSize=7; ax.LineWidth=0.75;
 ax.TickDir='out'; ax.TickLength=[0.010 0.010];
